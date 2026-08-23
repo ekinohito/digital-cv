@@ -2,6 +2,7 @@ import { Field, ID, InputType, Int } from '@nestjs/graphql';
 import {
   ArrayUnique,
   IsArray,
+  IsDate,
   IsInt,
   IsOptional,
   IsString,
@@ -36,6 +37,7 @@ export class CreateExperienceInput {
   descriptionRu!: string;
 
   @Field()
+  @IsDate()
   startDate!: Date;
 
   @Field(() => Date, { nullable: true })

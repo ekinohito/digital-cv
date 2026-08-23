@@ -97,11 +97,6 @@ a {
   right: -4px;
 }
 
-.topology-rail {
-  background-image: linear-gradient(#d9dfe5 1px, transparent 1px);
-  background-size: 100% 36px;
-}
-
 .topology-node::before {
   position: absolute;
   top: 50%;
@@ -129,6 +124,17 @@ a {
 
 .topology-node[data-status="unknown"] > span > span {
   background: #9a6812;
+}
+
+@media (max-width: 640px) {
+  .topology-node {
+    grid-template-columns: minmax(5.5rem, 0.7fr) minmax(0, 1fr);
+  }
+
+  .topology-node > span:last-child {
+    grid-column: 2;
+    justify-self: start;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

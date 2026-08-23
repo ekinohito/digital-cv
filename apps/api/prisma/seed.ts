@@ -7,7 +7,9 @@ if (!connectionString) {
   throw new Error('Missing required environment variable: DATABASE_URL');
 }
 
-const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) });
+const prisma = new PrismaClient({
+  adapter: new PrismaPg({ connectionString }),
+});
 
 const PROFILE_ID = '00000000-0000-4000-8000-000000000001';
 
@@ -215,7 +217,12 @@ const PROJECTS = [
     liveUrl: null,
     featured: true,
     sortOrder: 20,
-    skillIds: [SKILL_IDS.typescript, SKILL_IDS.nestjs, SKILL_IDS.postgresql, SKILL_IDS.jest],
+    skillIds: [
+      SKILL_IDS.typescript,
+      SKILL_IDS.nestjs,
+      SKILL_IDS.postgresql,
+      SKILL_IDS.jest,
+    ],
   },
   {
     id: PROJECT_IDS.realtimeDashboard,
@@ -346,12 +353,45 @@ async function seedProfile(): Promise<void> {
   }
 }
 
-async function main(): Promise<void> {
+async function seedIfEmpty(): Promise<void> {
+  const [
+    profileCount,
+    experienceCount,
+    projectCount,
+    skillCount,
+    socialLinkCount,
+    assetCount,
+  ] = await Promise.all([
+    prisma.profile.count(),
+    prisma.experience.count(),
+    prisma.project.count(),
+    prisma.skill.count(),
+    prisma.socialLink.count(),
+    prisma.asset.count(),
+  ]);
+
+  const hasExistingData =
+    profileCount > 0 ||
+    experienceCount > 0 ||
+    projectCount > 0 ||
+    skillCount > 0 ||
+    socialLinkCount > 0 ||
+    assetCount > 0;
+
+  if (hasExistingData) {
+    console.log('Database is not empty; skipping initial seed.');
+    return;
+  }
+
   await seedSkills();
   await seedExperiences();
   await seedProjects();
   await seedSocialLinks();
   await seedProfile();
+}
+
+async function main(): Promise<void> {
+  await seedIfEmpty();
 }
 
 main()

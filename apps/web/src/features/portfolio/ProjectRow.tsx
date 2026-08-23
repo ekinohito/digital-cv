@@ -15,7 +15,7 @@ export function ProjectRow({ project, index }: ProjectRowProps) {
   const data = getFragmentData(ProjectRowFragment, project);
 
   return (
-    <article className="group grid gap-5 border-b border-line py-7 first:border-t md:grid-cols-[minmax(0,1fr)_minmax(180px,0.36fr)_auto] md:items-start md:gap-8">
+    <article className="group border-b border-line py-7 transition-colors hover:bg-[#edf2f6] first:border-t">
       <div className="min-w-0">
         <div className="flex items-start gap-4">
           <span className="font-mono text-[0.68rem] tracking-[0.12em] text-accent">
@@ -38,7 +38,7 @@ export function ProjectRow({ project, index }: ProjectRowProps) {
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap content-start gap-x-3 gap-y-1 pl-9 md:pl-0">
+      <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 pl-9">
         {data.skills.map((skill) => (
           <span
             key={skill.id}
@@ -48,13 +48,13 @@ export function ProjectRow({ project, index }: ProjectRowProps) {
           </span>
         ))}
       </div>
-      <div className="flex items-center gap-4 pl-9 md:pl-0">
+      <div className="mt-5 flex min-h-10 items-center gap-4 pl-9">
         {data.repoUrl ? (
           <a
             href={data.repoUrl}
             target="_blank"
             rel="noreferrer"
-            className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-muted underline decoration-line underline-offset-4 transition-colors hover:text-ink"
+            className="inline-flex min-h-10 items-center border-b border-line font-mono text-[0.66rem] uppercase tracking-[0.08em] text-muted underline decoration-line underline-offset-4 transition-colors hover:border-ink hover:text-ink"
           >
             {t("public.viewRepository")}
           </a>
@@ -64,7 +64,7 @@ export function ProjectRow({ project, index }: ProjectRowProps) {
             href={data.liveUrl}
             target="_blank"
             rel="noreferrer"
-            className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-muted underline decoration-line underline-offset-4 transition-colors hover:text-ink"
+            className="inline-flex min-h-10 items-center border-b border-line font-mono text-[0.66rem] uppercase tracking-[0.08em] text-muted underline decoration-line underline-offset-4 transition-colors hover:border-ink hover:text-ink"
           >
             {t("public.viewLive")}
           </a>

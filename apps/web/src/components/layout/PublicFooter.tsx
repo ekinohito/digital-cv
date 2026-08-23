@@ -10,8 +10,10 @@ export function PublicFooter() {
     <footer className="border-t border-line bg-surface">
       <PageContainer>
         <div className="flex flex-col gap-5 py-8 text-sm text-muted md:flex-row md:items-center md:justify-between">
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.1em]">Digital CV / 2026</p>
-          <div className="flex items-center gap-5">
+          <p className="font-mono text-[0.68rem] uppercase tracking-[0.1em] text-ink">
+            Digital CV / 2026 / TypeScript
+          </p>
+          <div className="flex items-center gap-5 text-ink">
             <Link className="transition-colors hover:text-ink" to="/architecture">
               {t("nav.architecture")}
             </Link>

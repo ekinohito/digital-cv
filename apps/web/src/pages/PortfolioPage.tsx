@@ -65,10 +65,10 @@ export function PortfolioPage() {
     <>
       <PageContainer>
         <section
-          className="grid gap-14 border-b border-line py-16 md:py-24 lg:grid-cols-[1.12fr_0.88fr] lg:gap-20 lg:py-28"
+          className="grid gap-12 border-b border-line py-14 md:py-20 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:gap-16 lg:py-20"
           aria-labelledby="hero-title"
         >
-          <div className="flex flex-col justify-between gap-12">
+          <div className="flex flex-col justify-between gap-10">
             <div>
               <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-accent">
                 {t("public.heroEyebrow")}
@@ -79,19 +79,19 @@ export function PortfolioPage() {
                     <img
                       src={profile.avatar.url}
                       alt={profile.fullName}
-                      className="mt-8 size-16 border border-line object-cover grayscale"
+                      className="mt-8 size-32 border border-line object-cover"
                     />
                   ) : null}
                   <h1
                     id="hero-title"
-                    className="mt-7 max-w-4xl font-display text-[clamp(3.4rem,8vw,7.8rem)] font-semibold leading-[0.88] tracking-[-0.075em] text-ink"
+                    className="mt-6 max-w-4xl font-display text-[clamp(3.2rem,7.4vw,7.2rem)] font-semibold leading-[0.96] tracking-[-0.07em] text-ink"
                   >
                     {profile.fullName}
                   </h1>
-                  <p className="mt-8 max-w-2xl font-display text-[clamp(1.35rem,2.4vw,2.2rem)] leading-[1.1] tracking-[-0.04em] text-ink">
+                  <p className="mt-7 max-w-2xl font-display text-[clamp(1.35rem,2.4vw,2.2rem)] leading-[1.14] tracking-[-0.04em] text-ink">
                     {localized(locale, profile.headlineEn, profile.headlineRu)}
                   </p>
-                  <p className="mt-6 max-w-xl text-base leading-7 text-muted">
+                  <p className="mt-5 max-w-136 text-base leading-7 text-muted">
                     {localized(locale, profile.summaryEn, profile.summaryRu)}
                   </p>
                 </>
@@ -119,13 +119,13 @@ export function PortfolioPage() {
               ) : null}
             </div>
           </div>
-          <div className="flex items-end">
+          <div className="flex items-start pt-2 lg:pt-8">
             <SystemTopology />
           </div>
         </section>
 
         <section id="work" className="scroll-mt-24 py-16 md:py-24" aria-labelledby="work-title">
-          <div className="mb-10 grid gap-4 md:grid-cols-[0.36fr_1fr] md:gap-8">
+          <div className="mb-10 grid gap-4 md:grid-cols-[0.24fr_1fr] md:gap-6">
             <p className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-accent">
               01 / {t("public.selectedWork")}
             </p>
@@ -161,7 +161,7 @@ export function PortfolioPage() {
           className="scroll-mt-24 border-t border-line py-16 md:py-24"
           aria-labelledby="experience-title"
         >
-          <div className="mb-10 grid gap-4 md:grid-cols-[0.36fr_1fr] md:gap-8">
+          <div className="mb-10 grid gap-4 md:grid-cols-[0.24fr_1fr] md:gap-6">
             <p className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-accent">
               02 / {t("public.experience")}
             </p>
@@ -193,7 +193,7 @@ export function PortfolioPage() {
                     )}
                   </p>
                   <div>
-                    <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-baseline">
+                    <div className="flex flex-col gap-1">
                       <h3 className="font-display text-2xl tracking-[-0.04em] text-ink">
                         {experience.company}
                       </h3>
@@ -228,7 +228,7 @@ export function PortfolioPage() {
           className="scroll-mt-24 border-t border-line py-16 md:py-24"
           aria-labelledby="skills-title"
         >
-          <div className="mb-10 grid gap-4 md:grid-cols-[0.36fr_1fr] md:gap-8">
+          <div className="mb-10 grid gap-4 md:grid-cols-[0.24fr_1fr] md:gap-6">
             <p className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-accent">
               03 / {t("public.capabilities")}
             </p>
@@ -277,7 +277,7 @@ export function PortfolioPage() {
         </section>
 
         <section className="border-t border-line py-16 md:py-24" aria-labelledby="contact-title">
-          <div className="grid gap-8 md:grid-cols-[0.36fr_1fr] md:gap-8">
+          <div className="grid gap-8 md:grid-cols-[0.24fr_1fr] md:gap-6">
             <p className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-accent">
               04 / {t("public.about")}
             </p>
@@ -302,16 +302,6 @@ export function PortfolioPage() {
                     <Mail size={16} strokeWidth={1.5} />
                     {profile.email}
                   </a>
-                  {profile.githubUrl ? (
-                    <a
-                      href={profile.githubUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 text-ink underline decoration-line underline-offset-4 transition-colors hover:text-accent"
-                    >
-                      {t("public.github")} <ArrowUpRight size={15} strokeWidth={1.5} />
-                    </a>
-                  ) : null}
                 </div>
               ) : null}
             </div>

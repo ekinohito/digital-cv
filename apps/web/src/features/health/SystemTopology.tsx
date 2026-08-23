@@ -13,14 +13,16 @@ function TopologyNode({ label, technology, status }: TopologyNodeProps) {
 
   return (
     <div
-      className="topology-node relative ml-3 grid grid-cols-[minmax(85px,0.7fr)_1fr_auto] items-center gap-3 border-b border-line/80 py-3 last:border-b-0"
+      className="topology-node relative ml-3 grid min-w-0 grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 border-b  border-line/80 py-3 last:border-b-0"
       data-status={status}
     >
       <span className="font-mono text-[0.66rem] uppercase tracking-[0.09em] text-muted">
         {label}
       </span>
-      <span className="font-display text-base tracking-[-0.02em] text-ink">{technology}</span>
-      <span className="inline-flex items-center gap-1.5 font-mono text-[0.62rem] uppercase tracking-[0.08em] text-muted">
+      <span className="min-w-0 font-display text-base tracking-[-0.02em] text-ink">
+        {technology}
+      </span>
+      <span className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap font-mono text-[0.62rem] uppercase tracking-[0.08em] text-muted">
         <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" data-status={status} />
         {t(`public.${status}`)}
       </span>
@@ -58,7 +60,7 @@ export function SystemTopology() {
   const storageStatus: HealthStatus = failed ? "unknown" : toHealthStatus(health?.storage);
 
   return (
-    <aside className="border-l border-line pl-5 md:pl-7" aria-label={t("public.system")}>
+    <aside className="pl-5 md:pl-7" aria-label={t("public.system")}>
       <div className="mb-5 flex items-end justify-between gap-5">
         <div>
           <p className="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-accent">
@@ -72,7 +74,7 @@ export function SystemTopology() {
           {t("public.systemDescription")}
         </span>
       </div>
-      <div className="topology-rail border-y border-line bg-surface px-4">
+      <div className="topology-rail px-4">
         <TopologyNode label={t("public.api")} technology="NestJS / GraphQL" status={apiStatus} />
         <TopologyNode
           label={t("public.database")}

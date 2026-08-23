@@ -32,7 +32,7 @@ export function PublicHeader() {
             onClick={() => setMenuOpen(false)}
             className={({ isActive }) =>
               cn(
-                "font-mono text-[0.68rem] uppercase tracking-[0.1em] text-muted transition-colors hover:text-ink",
+                "font-mono text-[0.75rem] uppercase tracking-[0.07em] text-muted transition-colors hover:text-ink",
                 isActive && "text-accent",
               )
             }
@@ -44,7 +44,7 @@ export function PublicHeader() {
             key={link.key}
             href={link.href}
             onClick={() => setMenuOpen(false)}
-            className="font-mono text-[0.68rem] uppercase tracking-[0.1em] text-muted transition-colors hover:text-ink"
+            className="font-mono text-[0.75rem] uppercase tracking-[0.07em] text-muted transition-colors hover:text-ink"
           >
             {t(`nav.${link.key}`)}
           </a>
