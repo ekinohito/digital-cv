@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.7
 
 ARG NODE_VERSION=24
-ARG PNPM_VERSION=10.15.0
+ARG PNPM_VERSION=11.22.0
 
 
 # -----------------------------------------------------------------------------
@@ -11,6 +11,10 @@ ARG PNPM_VERSION=10.15.0
 FROM node:${NODE_VERSION}-bookworm-slim AS base
 
 ARG PNPM_VERSION
+
+RUN apt-get update -y \
+    && apt-get install -y --no-install-recommends openssl \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN npm install --global pnpm@${PNPM_VERSION}
 
@@ -23,7 +27,7 @@ WORKDIR /app
 
 FROM base AS deps
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 RUN --mount=type=cache,id=api-pnpm-store,target=/root/.local/share/pnpm/store \
     pnpm install --frozen-lockfile --prod=false
@@ -34,6 +38,13 @@ RUN --mount=type=cache,id=api-pnpm-store,target=/root/.local/share/pnpm/store \
 # -----------------------------------------------------------------------------
 
 FROM deps AS build
+
+COPY prisma/schema.prisma ./prisma/schema.prisma
+COPY prisma.config.ts tsconfig.json ./
+
+# Generate the typed Prisma client into src/generated before compiling the app.
+# tsconfig.json must be present so Prisma emits the correct module format.
+RUN pnpm exec prisma generate
 
 COPY . .
 
@@ -83,6 +94,10 @@ RUN groupadd --system --gid 10001 app \
 COPY --from=production-deps --chown=app:app /app/package.json ./
 COPY --from=production-deps --chown=app:app /app/node_modules ./node_modules
 COPY --from=production-deps --chown=app:app /app/dist ./dist
+
+# The application regenerates schema.gql at startup, so the runtime user
+# needs write access to the working directory.
+RUN chown app:app /app
 
 USER app
 

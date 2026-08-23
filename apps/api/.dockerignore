@@ -11,6 +11,9 @@ node_modules
 dist
 **/dist
 
+# Generated Prisma client (regenerated inside the image)
+src/generated
+
 # Test output
 coverage
 **/coverage

@@ -1,0 +1,219 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AssetObject {
+  createdAt: DateTime!
+  id: ID!
+  mimeType: String!
+  originalName: String!
+  size: Int!
+  url: String!
+}
+
+input CreateExperienceInput {
+  company: String!
+  descriptionEn: String!
+  descriptionRu: String!
+  endDate: DateTime
+  roleEn: String!
+  roleRu: String!
+  skillIds: [ID!]!
+  sortOrder: Int!
+  startDate: DateTime!
+}
+
+input CreateProjectInput {
+  detailsEn: String
+  detailsRu: String
+  featured: Boolean! = false
+  imageAssetId: ID
+  liveUrl: String
+  repoUrl: String
+  skillIds: [ID!]!
+  slug: String!
+  sortOrder: Int!
+  summaryEn: String!
+  summaryRu: String!
+  titleEn: String!
+  titleRu: String!
+}
+
+input CreateSkillInput {
+  category: SkillCategory!
+  name: String!
+  slug: String!
+  sortOrder: Int!
+}
+
+input CreateSocialLinkInput {
+  label: String!
+  platform: String!
+  sortOrder: Int!
+  url: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type ExperienceObject {
+  company: String!
+  createdAt: DateTime!
+  descriptionEn: String!
+  descriptionRu: String!
+  endDate: DateTime
+  id: ID!
+  roleEn: String!
+  roleRu: String!
+  skills: [SkillObject!]!
+  sortOrder: Int!
+  startDate: DateTime!
+  updatedAt: DateTime!
+}
+
+type Mutation {
+  createExperience(input: CreateExperienceInput!): ExperienceObject!
+  createProject(input: CreateProjectInput!): ProjectObject!
+  createSkill(input: CreateSkillInput!): SkillObject!
+  createSocialLink(input: CreateSocialLinkInput!): SocialLinkObject!
+  deleteAsset(id: ID!): Boolean!
+  deleteExperience(id: ID!): Boolean!
+  deleteProject(id: ID!): Boolean!
+  deleteSkill(id: ID!): Boolean!
+  deleteSocialLink(id: ID!): Boolean!
+  updateExperience(id: ID!, input: UpdateExperienceInput!): ExperienceObject!
+  updateProfile(input: UpdateProfileInput!): ProfileObject!
+  updateProject(id: ID!, input: UpdateProjectInput!): ProjectObject!
+  updateSkill(id: ID!, input: UpdateSkillInput!): SkillObject!
+  updateSocialLink(id: ID!, input: UpdateSocialLinkInput!): SocialLinkObject!
+}
+
+type ProfileObject {
+  avatar: AssetObject
+  email: String!
+  fullName: String!
+  githubUrl: String
+  headlineEn: String!
+  headlineRu: String!
+  id: ID!
+  resume: AssetObject
+  summaryEn: String!
+  summaryRu: String!
+  updatedAt: DateTime!
+}
+
+type ProjectObject {
+  createdAt: DateTime!
+  detailsEn: String
+  detailsRu: String
+  featured: Boolean!
+  id: ID!
+  image: AssetObject
+  liveUrl: String
+  repoUrl: String
+  skills: [SkillObject!]!
+  slug: String!
+  sortOrder: Int!
+  summaryEn: String!
+  summaryRu: String!
+  titleEn: String!
+  titleRu: String!
+  updatedAt: DateTime!
+}
+
+type Query {
+  assets: [AssetObject!]!
+  experiences: [ExperienceObject!]!
+  profile: ProfileObject!
+  project(slug: String!): ProjectObject
+  projects(featured: Boolean): [ProjectObject!]!
+  skills(category: SkillCategory): [SkillObject!]!
+  socialLinks: [SocialLinkObject!]!
+}
+
+enum SkillCategory {
+  BACKEND
+  DATABASE
+  FRONTEND
+  INFRASTRUCTURE
+  LANGUAGE
+  OTHER
+  TESTING
+  TOOLING
+}
+
+type SkillObject {
+  category: SkillCategory!
+  createdAt: DateTime!
+  id: ID!
+  name: String!
+  slug: String!
+  sortOrder: Int!
+  updatedAt: DateTime!
+}
+
+type SocialLinkObject {
+  createdAt: DateTime!
+  id: ID!
+  label: String!
+  platform: String!
+  sortOrder: Int!
+  updatedAt: DateTime!
+  url: String!
+}
+
+input UpdateExperienceInput {
+  company: String
+  descriptionEn: String
+  descriptionRu: String
+  endDate: DateTime
+  roleEn: String
+  roleRu: String
+  skillIds: [ID!]
+  sortOrder: Int
+  startDate: DateTime
+}
+
+input UpdateProfileInput {
+  avatarAssetId: ID
+  email: String
+  fullName: String
+  githubUrl: String
+  headlineEn: String
+  headlineRu: String
+  resumeAssetId: ID
+  summaryEn: String
+  summaryRu: String
+}
+
+input UpdateProjectInput {
+  detailsEn: String
+  detailsRu: String
+  featured: Boolean
+  imageAssetId: ID
+  liveUrl: String
+  repoUrl: String
+  skillIds: [ID!]
+  slug: String
+  sortOrder: Int
+  summaryEn: String
+  summaryRu: String
+  titleEn: String
+  titleRu: String
+}
+
+input UpdateSkillInput {
+  category: SkillCategory
+  name: String
+  slug: String
+  sortOrder: Int
+}
+
+input UpdateSocialLinkInput {
+  label: String
+  platform: String
+  sortOrder: Int
+  url: String
+}

@@ -1,4 +1,6 @@
 allowBuilds:
   '@prisma/engines': true
+  '@apollo/protobufjs': true
+  esbuild: true
   prisma: true
   unrs-resolver: true

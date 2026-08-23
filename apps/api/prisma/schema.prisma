@@ -1,13 +1,162 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
   provider = "cockroachdb"
+}
+
+enum SkillCategory {
+  LANGUAGE
+  BACKEND
+  FRONTEND
+  DATABASE
+  INFRASTRUCTURE
+  TESTING
+  TOOLING
+  OTHER
+}
+
+model Profile {
+  id String @id @default(uuid()) @db.Uuid
+
+  fullName String
+
+  headlineEn String
+  headlineRu String
+
+  summaryEn String
+  summaryRu String
+
+  email     String
+  githubUrl String?
+
+  avatarAssetId String? @unique @db.Uuid
+  resumeAssetId String? @unique @db.Uuid
+
+  avatarAsset Asset? @relation("ProfileAvatar", fields: [avatarAssetId], references: [id], onDelete: SetNull)
+
+  resumeAsset Asset? @relation("ProfileResume", fields: [resumeAssetId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("profiles")
+}
+
+model Experience {
+  id String @id @default(uuid()) @db.Uuid
+
+  company String
+
+  roleEn String
+  roleRu String
+
+  descriptionEn String
+  descriptionRu String
+
+  startDate DateTime
+  endDate   DateTime?
+
+  sortOrder Int @default(0)
+
+  skills Skill[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sortOrder])
+  @@map("experiences")
+}
+
+model Project {
+  id String @id @default(uuid()) @db.Uuid
+
+  slug String @unique
+
+  titleEn String
+  titleRu String
+
+  summaryEn String
+  summaryRu String
+
+  detailsEn String?
+  detailsRu String?
+
+  repoUrl String?
+  liveUrl String?
+
+  featured  Boolean @default(false)
+  sortOrder Int     @default(0)
+
+  imageAssetId String? @db.Uuid
+
+  imageAsset Asset? @relation("ProjectImage", fields: [imageAssetId], references: [id], onDelete: SetNull)
+
+  skills Skill[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([featured, sortOrder])
+  @@map("projects")
+}
+
+model Skill {
+  id String @id @default(uuid()) @db.Uuid
+
+  slug String @unique
+  name String
+
+  category  SkillCategory
+  sortOrder Int @default(0)
+
+  projects    Project[]
+  experiences Experience[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category, sortOrder])
+  @@map("skills")
+}
+
+model SocialLink {
+  id String @id @default(uuid()) @db.Uuid
+
+  platform String
+  label    String
+  url      String
+
+  sortOrder Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sortOrder])
+  @@map("social_links")
+}
+
+model Asset {
+  id String @id @default(uuid()) @db.Uuid
+
+  bucket String
+  key    String @unique
+
+  originalName String
+  mimeType     String
+  size         Int
+
+  profileAvatar Profile? @relation("ProfileAvatar")
+
+  profileResume Profile? @relation("ProfileResume")
+
+  projectImages Project[] @relation("ProjectImage")
+
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("assets")
 }
