@@ -1,0 +1,49 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Dependencies
+node_modules
+**/node_modules
+
+# Existing build output
+dist
+**/dist
+
+# Test output
+coverage
+**/coverage
+playwright-report
+test-results
+
+# Local caches
+.cache
+.vite
+**/.vite
+.turbo
+.nx
+
+# IDE
+.idea
+.vscode
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker local junk
+docker-compose.override.yml
