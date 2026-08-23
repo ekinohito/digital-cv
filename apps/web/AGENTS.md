@@ -87,3 +87,65 @@ For GitHub Actions, consider using [`voidzero-dev/setup-vp`](https://github.com/
 - [ ] Run `vp check` and `vp test` to validate changes.
 
 <!--VITE PLUS END-->
+
+## Frontend Design Direction
+
+Treat visual design as an intentional product decision, not as decoration.
+
+Before implementing UI, identify:
+
+- the exact subject;
+- the audience;
+- the single main job of the page;
+- one coherent visual direction;
+- one memorable signature element.
+
+For this project:
+
+Subject:
+A backend-focused senior TypeScript engineer and the systems he builds.
+
+Audience:
+A technical reviewer or employer evaluating engineering maturity.
+
+Primary page job:
+Within roughly one minute, communicate who the developer is, what systems he has built, and demonstrate that this website itself is a functioning technical project.
+
+Do not default to generic SaaS aesthetics.
+
+Avoid:
+
+- purple gradients;
+- excessive glassmorphism;
+- grids of identical rounded cards;
+- meaningless section numbering;
+- fake terminal decorations;
+- arbitrary charts and statistics;
+- decorative animations everywhere;
+- skill percentage bars;
+- stock portfolio layouts.
+
+Typography, layout, structural labels, dividers and motion must carry meaning.
+
+Make one visual idea distinctive and keep the rest disciplined.
+
+Motion should emphasize a small number of important transitions rather than animate every element.
+
+Copy must be concrete and functional. Buttons should describe actions precisely.
+
+Always implement:
+
+- responsive layouts;
+- visible keyboard focus;
+- semantic HTML;
+- reduced-motion support;
+- useful loading, empty and error states.
+
+After implementing each major page, visually critique it:
+
+- does it look specific to this engineer?
+- could the same layout belong to any SaaS landing page?
+- is there unnecessary decoration?
+- is hierarchy obvious without reading every word?
+
+If any answer is unsatisfactory, revise before moving on.

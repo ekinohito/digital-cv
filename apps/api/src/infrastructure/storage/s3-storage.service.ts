@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   DeleteObjectCommand,
   GetObjectCommand,
+  HeadBucketCommand,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
@@ -39,6 +40,10 @@ export class S3StorageService extends StorageService {
 
   get bucket(): string {
     return this.bucketName;
+  }
+
+  async health(): Promise<void> {
+    await this.client.send(new HeadBucketCommand({ Bucket: this.bucketName }));
   }
 
   async put(key: string, data: Buffer, contentType: string): Promise<void> {

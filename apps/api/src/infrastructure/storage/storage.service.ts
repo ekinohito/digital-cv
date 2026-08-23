@@ -3,6 +3,8 @@ import { Readable } from 'node:stream';
 export abstract class StorageService {
   abstract get bucket(): string;
 
+  health?(): Promise<void>;
+
   abstract put(key: string, data: Buffer, contentType: string): Promise<void>;
 
   abstract get(key: string): Promise<Readable>;

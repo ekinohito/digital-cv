@@ -14,6 +14,12 @@ export class ProfileResolver {
     return this.profileService.get();
   }
 
+  @Query(() => Boolean)
+  @UseGuards(AdminTokenGuard)
+  adminAccess(): boolean {
+    return true;
+  }
+
   @Mutation(() => ProfileObject)
   @UseGuards(AdminTokenGuard)
   updateProfile(

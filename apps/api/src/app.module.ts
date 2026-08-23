@@ -3,6 +3,8 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'node:path';
 import { AppController } from './app.controller';
+import { PrismaModule } from './infrastructure/prisma/prisma.module';
+import { StorageModule } from './infrastructure/storage/storage.module';
 import { AssetsModule } from './modules/assets/assets.module';
 import { ExperiencesModule } from './modules/experiences/experiences.module';
 import { ProfileModule } from './modules/profile/profile.module';
@@ -29,6 +31,8 @@ import { SocialLinksModule } from './modules/social-links/social-links.module';
     SkillsModule,
     SocialLinksModule,
     AssetsModule,
+    PrismaModule,
+    StorageModule,
   ],
   controllers: [AppController],
 })

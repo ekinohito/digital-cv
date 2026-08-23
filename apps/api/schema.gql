@@ -124,6 +124,7 @@ type ProjectObject {
 }
 
 type Query {
+  adminAccess: Boolean!
   assets: [AssetObject!]!
   experiences: [ExperienceObject!]!
   profile: ProfileObject!

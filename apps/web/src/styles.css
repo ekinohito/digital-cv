@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #f3f6f8;
+  --color-surface: #ffffff;
+  --color-ink: #12161d;
+  --color-muted: #68717d;
+  --color-line: #d9dfe5;
+  --color-accent: #2855d9;
+  --color-accent-soft: #dce6ff;
+  --color-positive: #147a5d;
+  --color-warning: #9a6812;
+  --font-display: "Syne", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+:root {
+  font-family: "IBM Plex Sans", sans-serif;
+  color: #12161d;
+  background: #f3f6f8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  color: #ffffff;
+  background: #2855d9;
+}
+
+:focus-visible {
+  outline: 3px solid #2855d9;
+  outline-offset: 3px;
+}
+
+.font-display {
+  font-family: "Syne", sans-serif;
+}
+
+.font-body {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+.font-mono {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.editorial-rule {
+  position: relative;
+  border-top: 1px solid #d9dfe5;
+}
+
+.editorial-rule::before,
+.editorial-rule::after {
+  position: absolute;
+  top: -4px;
+  width: 7px;
+  height: 7px;
+  content: "";
+  background: #f3f6f8;
+  border: 1px solid #d9dfe5;
+  transform: rotate(45deg);
+}
+
+.editorial-rule::before {
+  left: -4px;
+}
+
+.editorial-rule::after {
+  right: -4px;
+}
+
+.topology-rail {
+  background-image: linear-gradient(#d9dfe5 1px, transparent 1px);
+  background-size: 100% 36px;
+}
+
+.topology-node::before {
+  position: absolute;
+  top: 50%;
+  left: -12px;
+  width: 8px;
+  height: 8px;
+  content: "";
+  background: #ffffff;
+  border: 2px solid #2855d9;
+  border-radius: 999px;
+  transform: translateY(-50%);
+}
+
+.topology-node[data-status="offline"]::before {
+  border-color: #b24848;
+}
+
+.topology-node[data-status="unknown"]::before {
+  border-color: #9a6812;
+}
+
+.topology-node[data-status="offline"] > span > span {
+  background: #b24848;
+}
+
+.topology-node[data-status="unknown"] > span > span {
+  background: #9a6812;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -17,6 +17,10 @@ class InMemoryStorageService extends StorageService {
     return 'e2e-bucket';
   }
 
+  health(): Promise<void> {
+    return Promise.resolve();
+  }
+
   put(key: string, data: Buffer): Promise<void> {
     this.objects.set(key, data);
     return Promise.resolve();
@@ -98,7 +102,11 @@ describe('GraphQL API (e2e)', () => {
     const response = await request(app.getHttpServer())
       .get('/api/health')
       .expect(200);
-    expect(response.body).toEqual({ status: 'ok' });
+    expect(response.body).toEqual({
+      status: 'ok',
+      database: 'ok',
+      storage: 'ok',
+    });
   });
 
   it('returns public queries without a token', async () => {
