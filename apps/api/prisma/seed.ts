@@ -139,9 +139,9 @@ const EXPERIENCES = [
     roleEn: 'Senior Backend Developer',
     roleRu: 'Старший backend-разработчик',
     descriptionEn:
-      'Designed and delivered GraphQL APIs for data-heavy products. Led the migration of REST services to a NestJS modular monolith with Prisma and PostgreSQL-compatible storage.',
+      'Designed and built GraphQL APIs for products with large data volumes. Led the migration of REST services to a modular NestJS monolith backed by Prisma and PostgreSQL-compatible storage.',
     descriptionRu:
-      'Проектировал и разрабатывал GraphQL API для продуктов с большими объёмами данных. Руководил миграцией REST-сервисов на модульный монолит на NestJS с Prisma и PostgreSQL-совместимым хранилищем.',
+      'Проектировал и разрабатывал GraphQL API для продуктов с большими объёмами данных. Руководил переносом REST-сервисов на модульный монолит NestJS с Prisma и PostgreSQL-совместимым хранилищем.',
     startDate: new Date('2023-04-01T00:00:00.000Z'),
     endDate: null,
     sortOrder: 10,
@@ -159,9 +159,9 @@ const EXPERIENCES = [
     roleEn: 'Full-stack Developer',
     roleRu: 'Full-stack разработчик',
     descriptionEn:
-      'Built and operated a customer-facing SPA and its API end to end: React frontend, Node.js backend, relational schema design, and CI/CD pipelines with Docker.',
+      'Built and operated a customer-facing SPA and API: React frontend, Node.js backend, relational data modeling, and Docker-based CI/CD pipelines.',
     descriptionRu:
-      'Разрабатывал и поддерживал SPA и его API целиком: фронтенд на React, бэкенд на Node.js, проектирование реляционной схемы и CI/CD-пайплайны на Docker.',
+      'Разрабатывал и поддерживал SPA и API для пользователей: frontend на React, backend на Node.js, реляционная модель данных и CI/CD на Docker.',
     startDate: new Date('2020-09-01T00:00:00.000Z'),
     endDate: new Date('2023-03-31T00:00:00.000Z'),
     sortOrder: 20,
@@ -182,13 +182,13 @@ const PROJECTS = [
     titleEn: 'Digital developer card',
     titleRu: 'Цифровая визитка разработчика',
     summaryEn:
-      'This portfolio: a NestJS + GraphQL + Prisma backend, a React frontend, CockroachDB, and S3-compatible asset storage, all wired with Docker Compose.',
+      'This portfolio is built with a NestJS, GraphQL and Prisma backend, a React frontend, CockroachDB and S3-compatible file storage. Everything runs together with Docker Compose.',
     summaryRu:
-      'Это портфолио: бэкенд на NestJS + GraphQL + Prisma, фронтенд на React, CockroachDB и S3-совместимое хранилище файлов, всё склеено Docker Compose.',
+      'Это портфолио с backend на NestJS, GraphQL и Prisma, frontend на React, CockroachDB и S3-совместимым хранилищем файлов. Все сервисы запускаются через Docker Compose.',
     detailsEn:
-      'Code-first GraphQL schema, single admin token authorization, binary assets streamed through REST, and a deterministic database seed.',
+      'Code-first GraphQL schema, single-token admin authentication, binary files delivered through REST, and a deterministic database seed.',
     detailsRu:
-      'Code-first GraphQL-схема, авторизация по единому админ-токену, бинарные файлы через REST-потоки и детерминированный сид базы данных.',
+      'Code-first GraphQL-схема, авторизация в панели по единому токену, передача файлов через REST и детерминированное заполнение базы.',
     repoUrl: 'https://github.com/example/digital-cv',
     liveUrl: null,
     featured: true,
@@ -208,9 +208,9 @@ const PROJECTS = [
     titleEn: 'Task Forge API',
     titleRu: 'Task Forge API',
     summaryEn:
-      'Task management service with nested projects, deadlines, and a GraphQL subscription feed for realtime board updates.',
+      'Task management service with nested projects, deadlines and a GraphQL subscription feed for real-time board updates.',
     summaryRu:
-      'Сервис управления задачами с вложенными проектами, дедлайнами и лентой GraphQL-подписок для обновлений доски в реальном времени.',
+      'Сервис управления задачами с вложенными проектами, дедлайнами и GraphQL-подписками для обновления доски в реальном времени.',
     detailsEn: null,
     detailsRu: null,
     repoUrl: 'https://github.com/example/task-forge',
@@ -230,9 +230,9 @@ const PROJECTS = [
     titleEn: 'Realtime metrics dashboard',
     titleRu: 'Дашборд метрик в реальном времени',
     summaryEn:
-      'Operations dashboard rendering live service metrics with WebSockets, chart virtualization, and alerting rules.',
+      'Operations dashboard for live service metrics with WebSockets, virtualized charts and alerting rules.',
     summaryRu:
-      'Операционный дашборд с живыми метриками сервисов: WebSockets, виртуализация графиков и правила алертов.',
+      'Операционный дашборд с метриками сервисов в реальном времени, WebSockets, виртуализацией графиков и правилами оповещений.',
     detailsEn: null,
     detailsRu: null,
     repoUrl: 'https://github.com/example/realtime-dashboard',
@@ -334,12 +334,12 @@ async function seedSocialLinks(): Promise<void> {
 async function seedProfile(): Promise<void> {
   const data = {
     fullName: 'Alexey Petrov',
-    headlineEn: 'Backend developer — TypeScript, NestJS, GraphQL',
-    headlineRu: 'Backend-разработчик — TypeScript, NestJS, GraphQL',
+    headlineEn: 'Backend developer working with TypeScript, NestJS and GraphQL',
+    headlineRu: 'Backend-разработчик: TypeScript, NestJS, GraphQL',
     summaryEn:
-      'I build reliable backend services with TypeScript and Node.js: GraphQL APIs, relational data modeling, and infrastructure that is easy to operate. This card itself is a small full-stack application I use to demonstrate how I work.',
+      'I build reliable backend services with TypeScript and Node.js, including GraphQL APIs, relational data models and infrastructure that is easy to operate. This card is a small full-stack application that reflects how I work.',
     summaryRu:
-      'Разрабатываю надёжные backend-сервисы на TypeScript и Node.js: GraphQL API, проектирование реляционных данных и инфраструктуру, которую удобно поддерживать. Эта визитка — небольшое full-stack приложение, которое показывает мой подход к работе.',
+      'Разрабатываю надёжные backend-сервисы на TypeScript и Node.js: GraphQL API, реляционные модели данных и удобную в эксплуатации инфраструктуру. Эта визитка — небольшое full-stack приложение, которое отражает мой подход к работе.',
     email: 'alexey.petrov@example.com',
     githubUrl: 'https://github.com/example',
   };

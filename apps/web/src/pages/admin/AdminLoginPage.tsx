@@ -14,11 +14,14 @@ import { Input } from "../../components/ui/Input.tsx";
 import { PageContainer } from "../../components/layout/PageContainer.tsx";
 import { errorMessage } from "../../features/admin/admin.utils.ts";
 
-const loginSchema = z.object({ token: z.string().trim().min(1, "Enter the admin token.") });
-type LoginValues = z.infer<typeof loginSchema>;
+type Translate = (key: string) => string;
+const createLoginSchema = (t: Translate) =>
+  z.object({ token: z.string().trim().min(1, t("admin.tokenRequired")) });
+type LoginValues = z.infer<ReturnType<typeof createLoginSchema>>;
 
 export function AdminLoginPage({ onAuthenticated }: { onAuthenticated: () => void }) {
   const { t } = useTranslation();
+  const loginSchema = createLoginSchema(t);
   const client = useApolloClient();
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,14 +56,14 @@ export function AdminLoginPage({ onAuthenticated }: { onAuthenticated: () => voi
       <PageContainer>
         <Link
           to="/"
-          className="inline-flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-muted transition-colors hover:text-ink"
+          className="inline-flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-widest text-muted transition-colors hover:text-ink"
         >
           <ArrowLeft size={15} strokeWidth={1.5} /> {t("architecture.backToPortfolio")}
         </Link>
         <div className="mx-auto grid max-w-5xl gap-10 py-20 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:py-28">
           <div>
             <p className="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-accent">
-              ADMIN / ACCESS
+              {t("admin.accessLabel")}
             </p>
             <h1 className="mt-5 font-display text-[clamp(3rem,7vw,6rem)] leading-[0.88] tracking-[-0.07em] text-ink">
               {t("admin.loginTitle")}

@@ -29,13 +29,16 @@ import {
   SaveBar,
 } from "./AdminPrimitives.tsx";
 
-const linkSchema = z.object({
-  platform: z.string().trim().min(1, "Platform is required"),
-  label: z.string().trim().min(1, "Label is required"),
-  url: z.string().url("Enter a valid URL"),
-  sortOrder: z.string().regex(/^\d+$/, "Use a whole number"),
-});
-type LinkFormValues = z.infer<typeof linkSchema>;
+type Translate = (key: string) => string;
+
+const createLinkSchema = (t: Translate) =>
+  z.object({
+    platform: z.string().trim().min(1, t("admin.validation.required")),
+    label: z.string().trim().min(1, t("admin.validation.required")),
+    url: z.string().url(t("admin.validation.url")),
+    sortOrder: z.string().regex(/^\d+$/, t("admin.validation.number")),
+  });
+type LinkFormValues = z.infer<ReturnType<typeof createLinkSchema>>;
 const emptyValues: LinkFormValues = {
   platform: "github",
   label: "GitHub",
@@ -45,6 +48,7 @@ const emptyValues: LinkFormValues = {
 
 export function LinksAdminPage() {
   const { t } = useTranslation();
+  const linkSchema = createLinkSchema(t);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const { data, loading, error, refetch } = useQuery(AdminLinksQuery);
@@ -129,7 +133,7 @@ export function LinksAdminPage() {
   if (error && !data)
     return (
       <ErrorState
-        title="Could not load links."
+        title={t("admin.loadError")}
         description={error.message}
         retry={() => void refetch()}
       />
@@ -142,7 +146,7 @@ export function LinksAdminPage() {
       <AdminPageHeader
         eyebrow="CONTENT / 05"
         title={t("admin.links")}
-        description="Social links are ordered content, so the public contact section stays data-driven."
+        description={t("admin.linksDescription")}
         action={<AddButton onClick={() => setEditingId(null)}>{t("admin.create")}</AddButton>}
       />
       <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(330px,0.62fr)]">
@@ -187,8 +191,8 @@ export function LinksAdminPage() {
         <AdminSection className="xl:sticky xl:top-8 xl:self-start">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="font-mono text-[0.64rem] uppercase tracking-[0.1em] text-accent">
-                {editing ? "EDIT / LINK" : "NEW / LINK"}
+              <p className="font-mono text-[0.64rem] uppercase tracking-widest text-accent">
+                {editing ? t("admin.editRecord") : t("admin.newRecord")}
               </p>
               <h2 className="mt-2 font-display text-2xl tracking-[-0.04em]">
                 {editing ? editing.label : t("admin.createLink")}
@@ -198,7 +202,7 @@ export function LinksAdminPage() {
               <button
                 type="button"
                 className="text-muted hover:text-ink"
-                aria-label="Close editor"
+                aria-label={t("admin.closeEditor")}
                 onClick={() => setEditingId(null)}
               >
                 <X size={19} strokeWidth={1.5} />
@@ -216,7 +220,7 @@ export function LinksAdminPage() {
             <Field label={t("admin.label")} htmlFor="link-label" error={errors.label?.message}>
               <Input id="link-label" {...register("label")} />
             </Field>
-            <Field label="URL" htmlFor="link-url" error={errors.url?.message}>
+            <Field label={t("admin.url")} htmlFor="link-url" error={errors.url?.message}>
               <Input id="link-url" type="url" placeholder="https://..." {...register("url")} />
             </Field>
             <Field

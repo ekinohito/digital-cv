@@ -40,21 +40,25 @@ const SKILL_CATEGORIES = [
   "TOOLING",
   "OTHER",
 ] as const;
-const skillSchema = z.object({
-  slug: z
-    .string()
-    .trim()
-    .min(1, "Slug is required")
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use lowercase words separated by hyphens"),
-  name: z.string().trim().min(1, "Name is required"),
-  category: z.enum(SKILL_CATEGORIES),
-  sortOrder: z.string().regex(/^\d+$/, "Use a whole number"),
-});
-type SkillFormValues = z.infer<typeof skillSchema>;
+type Translate = (key: string) => string;
+
+const createSkillSchema = (t: Translate) =>
+  z.object({
+    slug: z
+      .string()
+      .trim()
+      .min(1, t("admin.validation.required"))
+      .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, t("admin.validation.slug")),
+    name: z.string().trim().min(1, t("admin.validation.required")),
+    category: z.enum(SKILL_CATEGORIES),
+    sortOrder: z.string().regex(/^\d+$/, t("admin.validation.number")),
+  });
+type SkillFormValues = z.infer<ReturnType<typeof createSkillSchema>>;
 const emptyValues: SkillFormValues = { slug: "", name: "", category: "BACKEND", sortOrder: "10" };
 
 export function SkillsAdminPage() {
   const { t } = useTranslation();
+  const skillSchema = createSkillSchema(t);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const { data, loading, error, refetch } = useQuery(AdminSkillsQuery);
@@ -139,7 +143,7 @@ export function SkillsAdminPage() {
   if (error && !data)
     return (
       <ErrorState
-        title="Could not load skills."
+        title={t("admin.loadError")}
         description={error.message}
         retry={() => void refetch()}
       />
@@ -152,12 +156,12 @@ export function SkillsAdminPage() {
       <AdminPageHeader
         eyebrow="CONTENT / 04"
         title={t("admin.skills")}
-        description="Skills are relationships used by projects and experience, not a progress scoreboard."
+        description={t("admin.skillsDescription")}
         action={<AddButton onClick={() => setEditingId(null)}>{t("admin.create")}</AddButton>}
       />
       <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(330px,0.62fr)]">
         <AdminSection className="p-0">
-          <div className="grid grid-cols-[minmax(0,1fr)_120px_auto] border-b border-line px-5 py-3 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-muted md:px-6">
+          <div className="grid grid-cols-[minmax(0,1fr)_120px_auto] border-b border-line px-5 py-3 font-mono text-[0.62rem] uppercase tracking-widest text-muted md:px-6">
             <span>{t("admin.name")}</span>
             <span>{t("admin.category")}</span>
             <span />
@@ -175,7 +179,7 @@ export function SkillsAdminPage() {
                   </p>
                 </div>
                 <span className="font-mono text-[0.6rem] uppercase tracking-[0.08em] text-accent">
-                  {skill.category}
+                  {t(`public.${skill.category.toLowerCase()}`, skill.category)}
                 </span>
                 <div className="flex items-center gap-1">
                   <Button
@@ -199,8 +203,8 @@ export function SkillsAdminPage() {
         <AdminSection className="xl:sticky xl:top-8 xl:self-start">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="font-mono text-[0.64rem] uppercase tracking-[0.1em] text-accent">
-                {editing ? "EDIT / SKILL" : "NEW / SKILL"}
+              <p className="font-mono text-[0.64rem] uppercase tracking-widest text-accent">
+                {editing ? t("admin.editRecord") : t("admin.newRecord")}
               </p>
               <h2 className="mt-2 font-display text-2xl tracking-[-0.04em]">
                 {editing ? editing.name : t("admin.createSkill")}
@@ -210,7 +214,7 @@ export function SkillsAdminPage() {
               <button
                 type="button"
                 className="text-muted hover:text-ink"
-                aria-label="Close editor"
+                aria-label={t("admin.closeEditor")}
                 onClick={() => setEditingId(null)}
               >
                 <X size={19} strokeWidth={1.5} />

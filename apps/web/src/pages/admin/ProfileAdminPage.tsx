@@ -23,22 +23,26 @@ import { type AssetUploadResponse } from "../../lib/asset-upload.ts";
 import { errorMessage } from "../../features/admin/admin.utils.ts";
 import { AdminPageHeader, AdminSection, SaveBar } from "./AdminPrimitives.tsx";
 
-const profileSchema = z.object({
-  fullName: z.string().trim().min(1, "Name is required"),
-  headlineEn: z.string().trim().min(1, "English headline is required"),
-  headlineRu: z.string().trim().min(1, "Russian headline is required"),
-  summaryEn: z.string().trim().min(1, "English summary is required"),
-  summaryRu: z.string().trim().min(1, "Russian summary is required"),
-  email: z.string().trim().email("Enter a valid email"),
-  githubUrl: z.string().url("Enter a valid URL").or(z.literal("")),
-  avatarAssetId: z.string(),
-  resumeAssetId: z.string(),
-});
+type Translate = (key: string) => string;
 
-type ProfileFormValues = z.infer<typeof profileSchema>;
+const createProfileSchema = (t: Translate) =>
+  z.object({
+    fullName: z.string().trim().min(1, t("admin.validation.required")),
+    headlineEn: z.string().trim().min(1, t("admin.validation.required")),
+    headlineRu: z.string().trim().min(1, t("admin.validation.required")),
+    summaryEn: z.string().trim().min(1, t("admin.validation.required")),
+    summaryRu: z.string().trim().min(1, t("admin.validation.required")),
+    email: z.string().trim().email(t("admin.validation.email")),
+    githubUrl: z.string().url(t("admin.validation.url")).or(z.literal("")),
+    avatarAssetId: z.string(),
+    resumeAssetId: z.string(),
+  });
+
+type ProfileFormValues = z.infer<ReturnType<typeof createProfileSchema>>;
 
 export function ProfileAdminPage() {
   const { t } = useTranslation();
+  const profileSchema = createProfileSchema(t);
   const { data, loading, error, refetch } = useQuery(AdminProfileQuery);
   const [updateProfile, { loading: saving }] = useMutation(UpdateProfileMutation);
   const [avatarUpload, setAvatarUpload] = useState<AssetUploadResponse | null>(null);
@@ -121,7 +125,7 @@ export function ProfileAdminPage() {
   if (error && !data)
     return (
       <ErrorState
-        title="Could not load profile."
+        title={t("admin.loadError")}
         description={error.message}
         retry={() => void refetch()}
       />
@@ -132,7 +136,7 @@ export function ProfileAdminPage() {
       <AdminPageHeader
         eyebrow="CONTENT / 01"
         title={t("admin.profile")}
-        description="The public page reads this record directly. Keep both language versions intentional."
+        description={t("admin.profileDescription")}
       />
       <AdminSection>
         <form className="space-y-8" onSubmit={handleSubmit(submit)}>

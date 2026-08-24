@@ -1,5 +1,6 @@
 import { useEffect, type PropsWithChildren } from "react";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { cn } from "../../lib/cn.ts";
 
 type DialogProps = PropsWithChildren<{
@@ -11,6 +12,7 @@ type DialogProps = PropsWithChildren<{
 }>;
 
 export function Dialog({ open, title, description, onClose, className, children }: DialogProps) {
+  const { t } = useTranslation();
   useEffect(() => {
     if (!open) {
       return undefined;
@@ -63,7 +65,7 @@ export function Dialog({ open, title, description, onClose, className, children 
           </div>
           <button
             type="button"
-            aria-label="Close dialog"
+            aria-label={t("actions.closeDialog")}
             className="text-muted transition-colors hover:text-ink"
             onClick={onClose}
           >

@@ -15,7 +15,7 @@ export function Field({ label, htmlFor, hint, error, className, children }: Fiel
       <div className="flex items-baseline justify-between gap-3">
         <label
           htmlFor={htmlFor}
-          className="font-mono text-[0.68rem] uppercase tracking-[0.1em] text-muted"
+          className="font-mono text-[0.68rem] uppercase tracking-widest text-muted"
         >
           {label}
         </label>

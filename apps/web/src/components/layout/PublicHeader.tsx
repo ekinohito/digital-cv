@@ -63,7 +63,7 @@ export function PublicHeader() {
 
           <div className="hidden items-center gap-8 md:flex">
             {navigation}
-            <div className="flex items-center gap-1 border-l border-line pl-6 font-mono text-[0.68rem] uppercase tracking-[0.1em]">
+            <div className="flex items-center gap-1 border-l border-line pl-6 font-mono text-[0.68rem] uppercase tracking-widest">
               {(["en", "ru"] as const).map((item) => (
                 <button
                   key={item}
@@ -96,7 +96,7 @@ export function PublicHeader() {
         {menuOpen ? (
           <div className="border-t border-line py-5 md:hidden">
             {navigation}
-            <div className="mt-5 flex items-center gap-3 border-t border-line pt-5 font-mono text-[0.68rem] uppercase tracking-[0.1em]">
+            <div className="mt-5 flex items-center gap-3 border-t border-line pt-5 font-mono text-[0.68rem] uppercase tracking-widest">
               <span className="text-muted">{t("locale.label")}</span>
               {(["en", "ru"] as const).map((item) => (
                 <button

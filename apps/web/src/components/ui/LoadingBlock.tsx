@@ -1,12 +1,14 @@
 import { cn } from "../../lib/cn.ts";
+import { useTranslation } from "react-i18next";
 
 export function LoadingBlock({ className }: { className?: string }) {
   return <div aria-hidden="true" className={cn("animate-pulse bg-line/70", className)} />;
 }
 
 export function SectionLoading({ rows = 3 }: { rows?: number }) {
+  const { t } = useTranslation();
   return (
-    <div className="space-y-5" aria-label="Loading" role="status">
+    <div className="space-y-5" aria-label={t("public.loading")} role="status">
       {Array.from({ length: rows }, (_, index) => (
         <div
           key={index}

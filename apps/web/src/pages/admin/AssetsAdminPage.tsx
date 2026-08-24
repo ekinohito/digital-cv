@@ -64,7 +64,7 @@ export function AssetsAdminPage() {
   if (error && !data)
     return (
       <ErrorState
-        title="Could not load assets."
+        title={t("admin.loadError")}
         description={error.message}
         retry={() => void refetch()}
       />
@@ -75,7 +75,7 @@ export function AssetsAdminPage() {
       <AdminPageHeader
         eyebrow="INFRASTRUCTURE / 06"
         title={t("admin.assets")}
-        description="Binary files live in S3-compatible storage. Metadata is listed here; profile and project relations are managed in their editors."
+        description={t("admin.assetsDescription")}
         action={
           <>
             <input
@@ -86,7 +86,7 @@ export function AssetsAdminPage() {
             />
             <Button type="button" disabled={uploading} onClick={() => inputRef.current?.click()}>
               <FileUp size={16} strokeWidth={1.5} />{" "}
-              {uploading ? "Uploading..." : t("admin.uploadNew")}
+              {uploading ? t("admin.uploading") : t("admin.uploadNew")}
             </Button>
           </>
         }
@@ -138,7 +138,7 @@ export function AssetsAdminPage() {
           <div className="p-5">
             <EmptyState
               title={t("admin.noRecords")}
-              description="Upload an image, résumé or document to make it available to the content editors."
+              description={t("admin.assetsEmptyDescription")}
             />
           </div>
         )}

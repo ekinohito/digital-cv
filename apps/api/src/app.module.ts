@@ -1,5 +1,5 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'node:path';
 import { AppController } from './app.controller';
@@ -20,7 +20,7 @@ import { SocialLinksModule } from './modules/social-links/social-links.module';
       autoSchemaFile: join(process.cwd(), 'schema.gql'),
 
       sortSchema: true,
-
+      introspection: true,
       playground: false,
       graphiql: true,
     }),

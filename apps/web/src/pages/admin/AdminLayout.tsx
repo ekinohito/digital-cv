@@ -27,7 +27,7 @@ export function AdminLayout() {
     <div className="min-h-screen bg-canvas text-ink">
       <header className="border-b border-line bg-surface lg:hidden">
         <PageContainer>
-          <div className="flex min-h-[68px] items-center justify-between gap-4">
+          <div className="flex min-h-17 items-center justify-between gap-4">
             <Link
               to="/admin/profile"
               className="font-display text-lg font-semibold tracking-[-0.04em]"
@@ -50,7 +50,7 @@ export function AdminLayout() {
           </div>
           {mobileNavOpen ? (
             <div className="border-t border-line py-4">
-              <nav aria-label="Admin navigation">
+              <nav aria-label={t("admin.navigationLabel")}>
                 {navigation.map((item) => (
                   <NavLink
                     key={item.path}
@@ -58,7 +58,7 @@ export function AdminLayout() {
                     onClick={() => setMobileNavOpen(false)}
                     className={({ isActive }) =>
                       cn(
-                        "block border-b border-line py-3 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-muted last:border-0",
+                        "block border-b border-line py-3 font-mono text-[0.68rem] uppercase tracking-widest text-muted last:border-0",
                         isActive && "text-accent",
                       )
                     }
@@ -70,14 +70,14 @@ export function AdminLayout() {
               <div className="mt-4 flex items-center gap-5 border-t border-line pt-4">
                 <a
                   href="/"
-                  className="inline-flex items-center gap-2 font-mono text-[0.64rem] uppercase tracking-[0.1em] text-muted"
+                  className="inline-flex items-center gap-2 font-mono text-[0.64rem] uppercase tracking-widest text-muted"
                 >
                   {t("admin.openSite")} <ExternalLink size={13} strokeWidth={1.5} />
                 </a>
                 <button
                   type="button"
                   onClick={logout}
-                  className="inline-flex items-center gap-2 font-mono text-[0.64rem] uppercase tracking-[0.1em] text-muted"
+                  className="inline-flex items-center gap-2 font-mono text-[0.64rem] uppercase tracking-widest text-muted"
                 >
                   {t("admin.signOut")} <LogOut size={13} strokeWidth={1.5} />
                 </button>
@@ -87,25 +87,25 @@ export function AdminLayout() {
         </PageContainer>
       </header>
 
-      <div className="mx-auto flex min-h-screen max-w-[1440px]">
+      <div className="mx-auto flex min-h-screen max-w-360">
         <aside className="hidden w-64 shrink-0 flex-col border-r border-line bg-surface px-7 py-8 lg:flex">
           <Link
             to="/admin/profile"
-            className="font-display text-xl font-semibold tracking-[-0.05em]"
+            className="font-display text-xl font-semibold tracking-tighter"
           >
             Digital CV<span className="text-accent">.</span>
           </Link>
           <p className="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-muted">
             {t("admin.contentOperations")}
           </p>
-          <nav className="mt-14 space-y-1" aria-label="Admin navigation">
+          <nav className="mt-14 space-y-1" aria-label={t("admin.navigationLabel")}>
             {navigation.map((item, index) => (
               <NavLink
                 key={item.path}
                 to={`/admin/${item.path}`}
                 className={({ isActive }) =>
                   cn(
-                    "flex items-center justify-between border-l-2 border-transparent px-3 py-2.5 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-muted transition-colors hover:text-ink",
+                    "flex items-center justify-between border-l-2 border-transparent px-3 py-2.5 font-mono text-[0.68rem] uppercase tracking-widest text-muted transition-colors hover:text-ink",
                     isActive && "border-accent bg-accent-soft/50 text-accent",
                   )
                 }
@@ -118,14 +118,14 @@ export function AdminLayout() {
           <div className="mt-auto space-y-1 border-t border-line pt-5">
             <a
               href="/"
-              className="flex items-center gap-2 px-3 py-2.5 font-mono text-[0.64rem] uppercase tracking-[0.1em] text-muted transition-colors hover:text-ink"
+              className="flex items-center gap-2 px-3 py-2.5 font-mono text-[0.64rem] uppercase tracking-widest text-muted transition-colors hover:text-ink"
             >
               {t("admin.openSite")} <ExternalLink size={13} strokeWidth={1.5} />
             </a>
             <button
               type="button"
               onClick={logout}
-              className="flex w-full items-center gap-2 px-3 py-2.5 text-left font-mono text-[0.64rem] uppercase tracking-[0.1em] text-muted transition-colors hover:text-ink"
+              className="flex w-full items-center gap-2 px-3 py-2.5 text-left font-mono text-[0.64rem] uppercase tracking-widest text-muted transition-colors hover:text-ink"
             >
               {t("admin.signOut")} <LogOut size={13} strokeWidth={1.5} />
             </button>
@@ -135,7 +135,7 @@ export function AdminLayout() {
         <main className="min-w-0 flex-1">
           <div className="hidden border-b border-line bg-surface lg:block">
             <PageContainer>
-              <div className="flex min-h-[72px] items-center justify-between gap-5">
+              <div className="flex min-h-18 items-center justify-between gap-5">
                 <p className="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-muted">
                   {t(`admin.${active}`)} / {t("admin.workspace")}
                 </p>
@@ -143,7 +143,7 @@ export function AdminLayout() {
                   <button
                     type="button"
                     onClick={logout}
-                    className="inline-flex items-center gap-2 font-mono text-[0.64rem] uppercase tracking-[0.1em] text-muted transition-colors hover:text-ink"
+                    className="inline-flex items-center gap-2 font-mono text-[0.64rem] uppercase tracking-widest text-muted transition-colors hover:text-ink"
                   >
                     {t("admin.signOut")} <LogOut size={13} strokeWidth={1.5} />
                   </button>

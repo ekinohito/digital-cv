@@ -33,19 +33,22 @@ import {
   SaveBar,
 } from "./AdminPrimitives.tsx";
 
-const experienceSchema = z.object({
-  company: z.string().trim().min(1, "Company is required"),
-  roleEn: z.string().trim().min(1, "English role is required"),
-  roleRu: z.string().trim().min(1, "Russian role is required"),
-  descriptionEn: z.string().trim().min(1, "English description is required"),
-  descriptionRu: z.string().trim().min(1, "Russian description is required"),
-  startDate: z.string().min(1, "Start date is required"),
-  endDate: z.string(),
-  sortOrder: z.string().regex(/^\d+$/, "Use a whole number"),
-  skillIds: z.array(z.string()),
-});
+type Translate = (key: string) => string;
 
-type ExperienceFormValues = z.infer<typeof experienceSchema>;
+const createExperienceSchema = (t: Translate) =>
+  z.object({
+    company: z.string().trim().min(1, t("admin.validation.required")),
+    roleEn: z.string().trim().min(1, t("admin.validation.required")),
+    roleRu: z.string().trim().min(1, t("admin.validation.required")),
+    descriptionEn: z.string().trim().min(1, t("admin.validation.required")),
+    descriptionRu: z.string().trim().min(1, t("admin.validation.required")),
+    startDate: z.string().min(1, t("admin.validation.required")),
+    endDate: z.string(),
+    sortOrder: z.string().regex(/^\d+$/, t("admin.validation.number")),
+    skillIds: z.array(z.string()),
+  });
+
+type ExperienceFormValues = z.infer<ReturnType<typeof createExperienceSchema>>;
 const emptyValues: ExperienceFormValues = {
   company: "",
   roleEn: "",
@@ -59,7 +62,9 @@ const emptyValues: ExperienceFormValues = {
 };
 
 export function ExperienceAdminPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language === "ru" ? "ru" : "en";
+  const experienceSchema = createExperienceSchema(t);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const { data, loading, error, refetch } = useQuery(AdminExperiencesQuery);
@@ -155,7 +160,7 @@ export function ExperienceAdminPage() {
   if (error && !data)
     return (
       <ErrorState
-        title="Could not load experiences."
+        title={t("admin.loadError")}
         description={error.message}
         retry={() => void refetch()}
       />
@@ -168,7 +173,7 @@ export function ExperienceAdminPage() {
       <AdminPageHeader
         eyebrow="CONTENT / 02"
         title={t("admin.experience")}
-        description="Keep the chronology concise: role, context and the systems shipped."
+        description={t("admin.experienceDescription")}
         action={<AddButton onClick={() => setEditingId(null)}>{t("admin.create")}</AddButton>}
       />
       <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(360px,0.72fr)]">
@@ -190,7 +195,9 @@ export function ExperienceAdminPage() {
                 </div>
                 <div>
                   <h2 className="font-display text-2xl tracking-[-0.04em]">{experience.company}</h2>
-                  <p className="mt-1 text-sm text-muted">{experience.roleEn}</p>
+                  <p className="mt-1 text-sm text-muted">
+                    {locale === "ru" ? experience.roleRu : experience.roleEn}
+                  </p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {experience.skills.map((skill) => (
                       <span
@@ -220,8 +227,8 @@ export function ExperienceAdminPage() {
         <AdminSection className="xl:sticky xl:top-8 xl:self-start">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="font-mono text-[0.64rem] uppercase tracking-[0.1em] text-accent">
-                {editing ? "EDIT / EXPERIENCE" : "NEW / EXPERIENCE"}
+              <p className="font-mono text-[0.64rem] uppercase tracking-widest text-accent">
+                {editing ? t("admin.editRecord") : t("admin.newRecord")}
               </p>
               <h2 className="mt-2 font-display text-2xl tracking-[-0.04em]">
                 {editing ? editing.company : t("admin.createExperience")}
@@ -231,7 +238,7 @@ export function ExperienceAdminPage() {
               <button
                 type="button"
                 className="text-muted hover:text-ink"
-                aria-label="Close editor"
+                aria-label={t("admin.closeEditor")}
                 onClick={() => setEditingId(null)}
               >
                 <X size={19} strokeWidth={1.5} />

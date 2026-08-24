@@ -51,7 +51,7 @@ export function ArchitecturePage() {
         <div>
           <Link
             to="/"
-            className="inline-flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-muted transition-colors hover:text-ink"
+            className="inline-flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-widest text-muted transition-colors hover:text-ink"
           >
             <ArrowLeft size={15} strokeWidth={1.5} /> {t("architecture.backToPortfolio")}
           </Link>
@@ -184,7 +184,7 @@ export function ArchitecturePage() {
           href="/graphql"
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-accent transition-colors hover:text-ink"
+          className="inline-flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-widest text-accent transition-colors hover:text-ink"
         >
           {t("architecture.exploreApi")} <ArrowUpRight size={16} strokeWidth={1.5} />
         </a>

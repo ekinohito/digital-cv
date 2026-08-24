@@ -104,7 +104,7 @@ export function PortfolioPage() {
             <div className="flex flex-wrap items-center gap-4">
               <a
                 href="#work"
-                className="inline-flex min-h-11 items-center gap-3 border border-accent bg-accent px-4 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-white transition-colors hover:bg-[#1f46bf]"
+                className="inline-flex min-h-11 items-center gap-3 border border-accent bg-accent px-4 font-mono text-[0.68rem] uppercase tracking-widest text-white transition-colors hover:bg-[#1f46bf]"
               >
                 {t("public.selectedWork")} <ArrowDown size={16} strokeWidth={1.5} />
               </a>
@@ -112,7 +112,7 @@ export function PortfolioPage() {
                 <a
                   href={profile.resume.url}
                   download={profile.resume.originalName}
-                  className="inline-flex min-h-11 items-center gap-2 border-b border-line font-mono text-[0.68rem] uppercase tracking-[0.1em] text-muted transition-colors hover:border-ink hover:text-ink"
+                  className="inline-flex min-h-11 items-center gap-2 border-b border-line font-mono text-[0.68rem] uppercase tracking-widest text-muted transition-colors hover:border-ink hover:text-ink"
                 >
                   {t("public.resume")} <ArrowUpRight size={15} strokeWidth={1.5} />
                 </a>
@@ -314,7 +314,7 @@ export function PortfolioPage() {
                   href={link.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="font-mono text-[0.68rem] uppercase tracking-[0.1em] text-muted transition-colors hover:text-ink"
+                  className="font-mono text-[0.68rem] uppercase tracking-widest text-muted transition-colors hover:text-ink"
                 >
                   {link.label}
                 </a>

@@ -30,7 +30,7 @@ import { PortfolioPageQuery } from "../../features/portfolio/portfolio.graphql.t
 import { errorMessage } from "../../features/admin/admin.utils.ts";
 import {
   emptyProjectFormValues,
-  projectFormSchema,
+  createProjectFormSchema,
   projectMutationInput,
   type ProjectFormValues,
 } from "../../features/projects/project-form.ts";
@@ -43,7 +43,9 @@ import {
 } from "./AdminPrimitives.tsx";
 
 export function ProjectsAdminPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language === "ru" ? "ru" : "en";
+  const projectFormSchema = createProjectFormSchema(t);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [imageUpload, setImageUpload] = useState<AssetUploadResponse | null>(null);
@@ -138,7 +140,7 @@ export function ProjectsAdminPage() {
   if (error && !data)
     return (
       <ErrorState
-        title="Could not load projects."
+        title={t("admin.loadError")}
         description={error.message}
         retry={() => void refetch()}
       />
@@ -151,7 +153,7 @@ export function ProjectsAdminPage() {
       <AdminPageHeader
         eyebrow="CONTENT / 03"
         title={t("admin.projects")}
-        description="Curate the work list shown on the public page. Featured projects are loaded by one GraphQL query."
+        description={t("admin.projectsDescription")}
         action={<AddButton onClick={() => setEditingId(null)}>{t("admin.create")}</AddButton>}
       />
       <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(390px,0.78fr)]">
@@ -164,10 +166,12 @@ export function ProjectsAdminPage() {
               >
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-3">
-                    <h2 className="font-display text-2xl tracking-[-0.04em]">{project.titleEn}</h2>
+                    <h2 className="font-display text-2xl tracking-[-0.04em]">
+                      {locale === "ru" ? project.titleRu : project.titleEn}
+                    </h2>
                     {project.featured ? (
-                      <span className="font-mono text-[0.58rem] uppercase tracking-[0.1em] text-accent">
-                        Featured
+                      <span className="font-mono text-[0.58rem] uppercase tracking-widest text-accent">
+                        {t("admin.featuredLabel")}
                       </span>
                     ) : null}
                   </div>
@@ -203,18 +207,22 @@ export function ProjectsAdminPage() {
         <AdminSection className="xl:sticky xl:top-8 xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="font-mono text-[0.64rem] uppercase tracking-[0.1em] text-accent">
-                {editing ? "EDIT / PROJECT" : "NEW / PROJECT"}
+              <p className="font-mono text-[0.64rem] uppercase tracking-widest text-accent">
+                {editing ? t("admin.editRecord") : t("admin.newRecord")}
               </p>
               <h2 className="mt-2 font-display text-2xl tracking-[-0.04em]">
-                {editing ? editing.titleEn : t("admin.createProject")}
+                {editing
+                  ? locale === "ru"
+                    ? editing.titleRu
+                    : editing.titleEn
+                  : t("admin.createProject")}
               </h2>
             </div>
             {editingId ? (
               <button
                 type="button"
                 className="text-muted hover:text-ink"
-                aria-label="Close editor"
+                aria-label={t("admin.closeEditor")}
                 onClick={() => setEditingId(null)}
               >
                 <X size={19} strokeWidth={1.5} />
@@ -225,7 +233,7 @@ export function ProjectsAdminPage() {
             <Field
               label={t("admin.slug")}
               htmlFor="project-slug"
-              hint="lowercase-hyphenated"
+              hint={t("admin.slugHint")}
               error={errors.slug?.message}
             >
               <Input id="project-slug" {...register("slug")} />

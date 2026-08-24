@@ -38,7 +38,7 @@ describe("AdminGate", () => {
     setAdminToken("invalid");
     renderGate({ error: new Error("Invalid admin token") });
 
-    expect(await screen.findByText("Open the workspace")).toBeTruthy();
+    expect(await screen.findByText("Sign in to the admin panel")).toBeTruthy();
     expect(sessionStorage.getItem("digital-cv.admin-token")).toBeNull();
   });
 

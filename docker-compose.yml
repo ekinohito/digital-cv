@@ -19,12 +19,12 @@ services:
     volumes:
       - cockroach-data:/cockroach/cockroach-data
 
-    ports:
-      # SQL — useful for local debugging.
-      - "${COCKROACH_SQL_PORT:-26257}:26257"
+    # ports:
+    #   # SQL — useful for local debugging.
+    #   - "${COCKROACH_SQL_PORT:-26257}:26257"
 
-      # CockroachDB web console.
-      - "${COCKROACH_HTTP_PORT:-8080}:8080"
+    #   # CockroachDB web console.
+    #   - "${COCKROACH_HTTP_PORT:-8080}:8080"
 
     healthcheck:
       test:
@@ -63,9 +63,9 @@ services:
     volumes:
       - minio-data:/data
 
-    ports:
-      - "${MINIO_API_PORT:-9000}:9000"
-      - "${MINIO_CONSOLE_PORT:-9001}:9001"
+    # ports:
+    #   - "${MINIO_API_PORT:-9000}:9000"
+    #   - "${MINIO_CONSOLE_PORT:-9001}:9001"
 
     healthcheck:
       test: ["CMD", "mc", "ready", "local"]
@@ -211,9 +211,8 @@ services:
       minio-init:
         condition: service_completed_successfully
 
-    # Optional, but useful while reviewing/debugging the test assignment.
-    ports:
-      - "${API_PORT:-3000}:3000"
+    # ports:
+    #   - "${API_PORT:-3000}:3000"
 
     restart: unless-stopped
 
@@ -246,6 +245,31 @@ services:
       - app
 
 
+  # ===========================================================================
+  # React / Nginx
+  # ===========================================================================
+
+  caddy:
+    image: caddy:2-alpine
+
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+    depends_on:
+      web:
+        condition: service_healthy
+
+    networks:
+      - app
+
 # =============================================================================
 # Persistent storage
 # =============================================================================
@@ -253,6 +277,8 @@ services:
 volumes:
   cockroach-data:
   minio-data:
+  caddy-data:
+  caddy-config:
 
 
 # =============================================================================

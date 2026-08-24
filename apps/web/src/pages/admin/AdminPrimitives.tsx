@@ -1,5 +1,6 @@
 import type { PropsWithChildren, ReactNode } from "react";
 import { Plus, Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "../../components/ui/Button.tsx";
 import { cn } from "../../lib/cn.ts";
 
@@ -43,9 +44,9 @@ export function AdminSection({ children, className }: PropsWithChildren<{ classN
 export function SaveBar({
   saving,
   saved,
-  label = "Save changes",
-  savingLabel = "Saving...",
-  savedLabel = "Saved",
+  label,
+  savingLabel,
+  savedLabel,
 }: {
   saving: boolean;
   saved: boolean;
@@ -53,47 +54,38 @@ export function SaveBar({
   savingLabel?: string;
   savedLabel?: string;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="flex items-center justify-end gap-4 border-t border-line pt-5">
       <span
         className={cn(
-          "font-mono text-[0.66rem] uppercase tracking-[0.1em] text-positive",
+          "font-mono text-[0.66rem] uppercase tracking-widest text-positive",
           !saved && "opacity-0",
         )}
       >
-        {savedLabel}
+        {savedLabel ?? t("actions.saved")}
       </span>
       <Button type="submit" disabled={saving}>
-        {saving ? savingLabel : label}
+        {saving ? (savingLabel ?? t("actions.saving")) : (label ?? t("actions.save"))}
       </Button>
     </div>
   );
 }
 
-export function AddButton({
-  onClick,
-  children = "Add",
-}: {
-  onClick: () => void;
-  children?: ReactNode;
-}) {
+export function AddButton({ onClick, children }: { onClick: () => void; children?: ReactNode }) {
+  const { t } = useTranslation();
   return (
     <Button type="button" variant="secondary" onClick={onClick}>
-      <Plus size={16} strokeWidth={1.5} /> {children}
+      <Plus size={16} strokeWidth={1.5} /> {children ?? t("actions.add")}
     </Button>
   );
 }
 
-export function DeleteButton({
-  onClick,
-  children = "Delete",
-}: {
-  onClick: () => void;
-  children?: ReactNode;
-}) {
+export function DeleteButton({ onClick, children }: { onClick: () => void; children?: ReactNode }) {
+  const { t } = useTranslation();
   return (
     <Button type="button" variant="danger" size="sm" onClick={onClick}>
-      <Trash2 size={14} strokeWidth={1.5} /> {children}
+      <Trash2 size={14} strokeWidth={1.5} /> {children ?? t("actions.delete")}
     </Button>
   );
 }
