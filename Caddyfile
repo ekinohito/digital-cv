@@ -1,0 +1,3 @@
+ekinohito.space {
+    reverse_proxy web:8080
+}
